@@ -13,6 +13,6 @@ public class TestController {
     public String getDate(){
 
         System.out.println("测试");
-        return  String.valueOf(BankCheck.checkBankCard("21212121"));
+        return  String.valueOf(BankCheck.checkBankCard("21212121111"));
     }
 }
