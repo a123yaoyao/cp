@@ -2,7 +2,8 @@ package com.cn.count.interceptor;
 
 import com.cn.count.model.User;
 import com.cn.count.service.UserService;
-import com.cp.utils.helper.CookieUtils;
+
+import com.cn.count.utils.CookieUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
