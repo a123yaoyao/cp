@@ -20,7 +20,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableWebMvc
 public class WebMvcConfig  implements WebMvcConfigurer{
 
     @Autowired
@@ -34,9 +33,13 @@ public class WebMvcConfig  implements WebMvcConfigurer{
     //注意这里不要使用 new LoginHandlerInterceptor() ，否则就会出现拦截器里无法注入service的问题
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         registry.addInterceptor(
                 loginHandlerInterceptor
-        ).addPathPatterns("/**").excludePathPatterns("/api/getToken","/success");
+        ).addPathPatterns("/**")
+                //.excludePathPatterns("/api/getToken","/success")
+                .excludePathPatterns("/static/**");
+         ;
     }
 }
 
