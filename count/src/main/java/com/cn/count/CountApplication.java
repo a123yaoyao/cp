@@ -10,6 +10,6 @@ public class CountApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CountApplication.class, args);
-		System.out.println("111");
+		System.out.println("1111222222222");
 	}
 }
