@@ -18,6 +18,8 @@ public class User {
     private String platform;				// 用户来自的平台
     private String createdDate;				// 用户注册时间
     private String updatedDate;				// 用户最后一次登录时间
+    private String qq;				        // qq
+    private String twitter;				    // twitter
 
     public Long getId() {
         return id;
@@ -85,10 +87,39 @@ public class User {
     public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
+    }
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", account=" + account + ", userName=" + userName + ", plainPassword=" + plainPassword
-                + ", password=" + password + ", salt=" + salt + ", iphone=" + iphone + ", email=" + email
-                + ", platform=" + platform + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
+        return "User{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", userName='" + userName + '\'' +
+                ", plainPassword='" + plainPassword + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", iphone='" + iphone + '\'' +
+                ", email='" + email + '\'' +
+                ", platform='" + platform + '\'' +
+                ", createdDate='" + createdDate + '\'' +
+                ", updatedDate='" + updatedDate + '\'' +
+                ", qq='" + qq + '\'' +
+                ", twitter='" + twitter + '\'' +
+                '}';
     }
 }

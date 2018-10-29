@@ -42,17 +42,16 @@ public class UserController {
         return "redirect:/list";
     }
 
-    @RequestMapping("/toEdit")
-    public String toEdit(Model model, Long id) {
-        User user=userService.findUserById(id);
-        model.addAttribute("user", user);
-        return "user/userEdit";
+    @RequestMapping("user/edit")
+    public String toEdit(User user) {
+        userService.edit(user);
+        return "/admin-user";
     }
 
     @RequestMapping("/edit")
     public String edit(User user) {
         userService.edit(user);
-        return "redirect:/list";
+        return "/admin-user";
     }
 
 
