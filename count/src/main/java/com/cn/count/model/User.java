@@ -1,7 +1,12 @@
 package com.cn.count.model;
 
-public class User {
+import javax.persistence.*;
 
+@Entity
+@Table(name="itdragon_user")
+public class User {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;						// 自增长主键
     private String account;					// 登录的账号
     private String userName;				// 注册的昵称

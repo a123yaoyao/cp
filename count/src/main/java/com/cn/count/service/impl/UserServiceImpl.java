@@ -2,14 +2,17 @@ package com.cn.count.service.impl;
 
 import com.cn.count.model.ResponseResult;
 import com.cn.count.model.User;
+import com.cn.count.repository.UserRepository;
 import com.cn.count.service.UserService;
 import com.cn.count.utils.HttpClientUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @PropertySource(value = "classpath:resource.properties", ignoreResourceNotFound = true)
@@ -25,6 +28,10 @@ public class UserServiceImpl implements UserService {
     Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Value("${SSO_USER_TOKEN}")
     private String SSO_USER_TOKEN;
+
+    @Autowired
+    private UserRepository userRepository;
+
 
     @Override
     public User getUserByToken(String token) {
@@ -43,4 +50,32 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    @Override
+    public List<User> getUserList() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User findUserById(long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public void save(User user) {
+        userRepository
+                .save(user);
+    }
+
+    @Override
+    public void edit(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public void delete(User user) {
+        userRepository.delete(user);
+    }
+
+
 }
