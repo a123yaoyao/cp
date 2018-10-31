@@ -2,6 +2,8 @@ package com.cn.count.controller;
 
 import com.cn.count.service.MachineService;
 import com.google.gson.Gson;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
 
 @RestController("/")
+@Api("swaggerDemoController相关的api")
 public class MachineController {
 
     Logger logger =LoggerFactory.getLogger(MachineController.class);
@@ -21,6 +24,7 @@ public class MachineController {
     @Autowired
     MachineService machineService;
 
+    @ApiOperation(value="获取机器详细信息", notes="")
     @RequestMapping("/machine")
    public  String getMachineInfo(Model model){
         // 使用new方法
