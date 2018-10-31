@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<div class="am-cf admin-main">
+
 
     <!-- sidebar end -->
 
@@ -146,24 +146,24 @@
                             <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
                                 <tbody>
                                 <tr>
-                                    <th class="am-text-center">#</th>
+                                    <th class="am-text-center">内存</th>
                                     <th>堆内存</th>
                                     <th>非堆内存</th>
                                 </tr>
                                 <tr>
                                     <td class="am-text-center" >初始的总内存</td>
                                     <td id="totalMemorySize"></td>
-                                    <td>-</td>
+                                    <td id="totalNoHeapMemorySize">-</td>
                                 </tr>
                                 <tr>
                                     <td class="am-text-center" >最大可用内存</td>
                                     <td id="maxMemorySize"></td>
-                                    <td></td>
+                                    <td id="maxNoHeapMemorySize"></td>
                                 </tr>
                                 <tr>
                                     <td class="am-text-center" >已使用的内存</td>
                                     <td id="usedMemorySize"></td>
-                                    <td>-</td>
+                                    <td id="usedNoHeapMemorySize">-</td>
                                 </tr>
 
                                 </tbody>
@@ -265,7 +265,7 @@
         </footer>
     </div>
     <!-- content end -->
-</div>
+
 
 <a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
 
