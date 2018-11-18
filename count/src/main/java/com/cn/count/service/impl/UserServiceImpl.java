@@ -5,6 +5,7 @@ import com.cn.count.model.User;
 import com.cn.count.repository.UserRepository;
 import com.cn.count.service.UserService;
 import com.cn.count.utils.HttpClientUtil;
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,8 +31,8 @@ public class UserServiceImpl implements UserService {
     @Value("${SSO_USER_TOKEN}")
     private String SSO_USER_TOKEN;
 
-    @Autowired
-    private UserRepository userRepository;
+   // @Autowired
+  //  private UserRepository userRepository;
 
 
     @Override
@@ -53,28 +55,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUserList() {
-        return userRepository.findAll();
+
+        //return userRepository.findAll();
+        return  new ArrayList<>();
     }
 
     @Override
     public User findUserById(long id) {
-        return userRepository.findById(id);
+
+      //  return userRepository.findById(id);
+        return new User();
     }
 
     @Override
     public void save(User user) {
-        userRepository
-                .save(user);
+//        userRepository
+//                .save(user);
     }
 
     @Override
     public void edit(User user) {
-        userRepository.save(user);
+
+        //userRepository.save(user);
     }
 
     @Override
     public void delete(User user) {
-        userRepository.delete(user);
+
+        //userRepository.delete(user);
     }
 
 

@@ -1,5 +1,6 @@
 package com.cn.count.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.server.ErrorPage;
@@ -9,9 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class ErrorPageConfig implements ErrorPageRegistrar {
 
-    private static final Logger logger = LoggerFactory.getLogger(ErrorPageConfig.class);
+
 
     @Override
     public void registerErrorPages(ErrorPageRegistry errorPageRegistry) {
@@ -21,6 +23,7 @@ public class ErrorPageConfig implements ErrorPageRegistrar {
         //错误类型为500，表示服务器响应错误，默认显示500.html网页
         ErrorPage e500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500");
         errorPageRegistry.addErrorPages(e404, e500);
+
     }
 
 }
