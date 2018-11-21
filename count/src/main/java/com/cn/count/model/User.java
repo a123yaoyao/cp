@@ -1,10 +1,14 @@
 package com.cn.count.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="itdragon_user")
-public class User {
+@Document(collection = "itdragon_user")//指定表名
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;						// 自增长主键
