@@ -30,7 +30,7 @@ public class MachineController {
         // 使用new方法
         Gson gson = new Gson();
       String machine=  gson.toJson(machineService.getHeapMemory())  ;
-      logger.info(machine);
+      //logger.info(machine);
       return machine;
     }
 }
