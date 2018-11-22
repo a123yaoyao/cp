@@ -29,22 +29,22 @@
                 <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> / <small>一些常用模块</small></div>
             </div>
 
-            <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
+<!--            <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
                 <li><a href="#" class="am-text-success"><span class="am-icon-btn am-icon-file-text"></span><br/>新增页面<br/>2300</a></li>
                 <li><a href="#" class="am-text-warning"><span class="am-icon-btn am-icon-briefcase"></span><br/>成交订单<br/>308</a></li>
                 <li><a href="#" class="am-text-danger"><span class="am-icon-btn am-icon-recycle"></span><br/>昨日访问<br/>80082</a></li>
                 <li><a href="#" class="am-text-secondary"><span class="am-icon-btn am-icon-user-md"></span><br/>在线用户<br/>3000</a></li>
-            </ul>
+            </ul>-->
 
             <div class="am-g">
                 <div class="am-u-sm-12">
                     <table class="am-table am-table-bd am-table-striped admin-content-table">
                         <thead>
                         <tr>
-                            <th>ID</th><th>用户名</th><th>最后成交任务</th><th>成交订单</th><th>管理</th>
+                            <th>ID</th><th>修改人</th><th>参数名</th><th>参数值</th><th>管理</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="param" >
                         <tr><td>1</td><td>John Clark</td><td><a href="#">Business management</a></td> <td><span class="am-badge am-badge-success">+20</span></td>
                             <td>
                                 <div class="am-dropdown" data-am-dropdown>
@@ -96,7 +96,7 @@
 
                         <tr>
                             <td>5</td><td>呵呵呵</td>
-                            <td><a href="#">基兰会获得BUFF</a></td>
+                            <td><a href="#">aa</a></td>
                             <td><span class="am-badge">+22</span></td>
                             <td>
                                 <div class="am-dropdown" data-am-dropdown>
@@ -116,7 +116,8 @@
 
             <div class="am-g">
                 <div class="am-u-md-6">
-                    <div class="am-panel am-panel-default">
+
+<!--                    <div class="am-panel am-panel-default">
                         <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-1'}">文件上传<span class="am-icon-chevron-down am-fr" ></span></div>
                         <div class="am-panel-bd am-collapse am-in" id="collapse-panel-1">
                             <ul class="am-list admin-content-file">
@@ -137,7 +138,8 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </div>-->
+
                     <div class="am-panel am-panel-default">
                         <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-2'}"> 内存
 
@@ -259,6 +261,25 @@
             </div>
         </div>
 
+
+        <button
+                type="button"
+                class="am-btn am-btn-primary"
+                data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 400, height: 225}">
+            Modal
+        </button>
+
+        <div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
+            <div class="am-modal-dialog">
+                <div class="am-modal-hd">参数修改
+                    <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+                </div>
+                <div class="am-modal-bd">
+
+                </div>
+            </div>
+        </div>
+
         <footer class="admin-content-footer">
             <hr>
             <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
@@ -286,6 +307,14 @@
 <script>
     $(document).ready(function(){
 
+        getMachineInfo();
+
+        getParanmInfo();
+
+
+    });
+
+    function getMachineInfo() {
         $.ajax({
             url:'../machine',
             type: 'POST',
@@ -298,9 +327,28 @@
 
             }
         });
+    }
 
 
-    });
+    function getParanmInfo() {
+        $.ajax({
+            url:'../param/list',
+            type: 'POST',
+            dataType:'json',
+            success:function(data){
+                $('#param').html('');
+                for(var i in data){
+                    var tr ='<tr><td>'+data[i].id+'</td><td>'+data[i].modifier+'</td><td>'+data[i].name+'</td> <td>'+data[i].value+'</td><td><button' +
+                        '  type="button"' +
+                        '  class="am-btn am-btn-primary"' +
+                        '  data-am-modal="{target: \'#doc-modal-1\', closeViaDimmer: 0, width: 400, height: 225}">' +
+                        '  编辑' +
+                        '</button></td></tr>';
+                    $('#param').append(tr);
+                }
 
+            }
+        });
+    }
 
 </script>

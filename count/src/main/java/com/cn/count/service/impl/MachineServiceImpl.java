@@ -1,62 +1,85 @@
 package com.cn.count.service.impl;
 
+import com.cn.count.controller.MachineController;
 import com.cn.count.service.MachineService;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
 
 @Service
-@Slf4j
 public class MachineServiceImpl implements MachineService {
 
-    public  static  final String MB = "MB";
+    Logger logger = LoggerFactory.getLogger(MachineController.class);
+
+    private final ConcurrentHashMap<String, Map<String,String>> cacheMap=new ConcurrentHashMap<> ();
 
     @Override
     public Map<String,String> getCpuCondition() {
         return null;
     }
 
+    public   Object getCache(String key){
+       Map<String,String> value=null;
+        value = cacheMap.get(key);
+        if(value==null){
+            value = getHeapMemory();
+           // cacheMap.putCache(key,value);
+            cacheMap.putIfAbsent(key,value);
+        }
+        return value;
+    }
+
+
+//    public  void putCache(String key,Map<String,String> value){
+//        cacheMap.putIfAbsent(key, value);
+//    }
+
     @Override
-    public Map<String, String> getHeapMemory() throws ExecutionException, InterruptedException {
-        ExecutorService pool = Executors.newSingleThreadExecutor();
-        Future<Map<String, String>> future= pool.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Map<String,String> memory=new HashMap<>();
-                MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
+    public Map<String,String> getHeapMemory() {
 
-                MemoryUsage memoryUsage = memoryMXBean.getHeapMemoryUsage(); //椎内存使用情况
 
-                long totalMemorySize = memoryUsage.getInit(); //初始的总内存
+        MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
 
-                long maxMemorySize = memoryUsage.getMax(); //最大可用内存
+        MemoryUsage memoryUsage = memoryMXBean.getHeapMemoryUsage(); //椎内存使用情况
 
-                long usedMemorySize = memoryUsage.getUsed(); //已使用的内存
+        long totalMemorySize = memoryUsage.getInit(); //初始的总内存
 
-                MemoryUsage noHeapMemoryUsage = memoryMXBean.getNonHeapMemoryUsage();
-                String totalNoHeapMemorySize = String.valueOf(noHeapMemoryUsage.getInit()/1024/1024.0)+MB;
-                String maxNoHeapMemorySize =String.valueOf(noHeapMemoryUsage.getMax()/1024/1024.0)+MB;
-                String usedNoHeapMemorySize = String.valueOf(noHeapMemoryUsage.getUsed()/1024/1024.0)+MB;
+        long maxMemorySize = memoryUsage.getMax(); //最大可用内存
 
-                memory.put("totalMemorySize",String.valueOf(totalMemorySize/1024/1024)+MB);
-                memory.put("maxMemorySize",String.valueOf(maxMemorySize/1024/1024)+MB);
-                memory.put("usedMemorySize",(String.valueOf(usedMemorySize/1024/1024)+MB));
+        long usedMemorySize = memoryUsage.getUsed(); //已使用的内存
+        Map<String,String> memory=new HashMap<>();
+        dealWithMemorySize(totalMemorySize);
+/*        memory.put("totalMemorySize",String.valueOf(totalMemorySize/1024/1024)+"MB");
+        memory.put("maxMemorySize",String.valueOf(maxMemorySize/1024/1024)+"MB");
+        memory.put("usedMemorySize",(String.valueOf(usedMemorySize/1024/1024)+"MB"));*/
+        memory.put("totalMemorySize",dealWithMemorySize(totalMemorySize));
+        memory.put("maxMemorySize",dealWithMemorySize(maxMemorySize));
+        memory.put("usedMemorySize",dealWithMemorySize(usedMemorySize));
 
-                memory.put("totalNoHeapMemorySize",totalNoHeapMemorySize);
-                memory.put("maxNoHeapMemorySize",maxNoHeapMemorySize);
-                memory.put("usedNoHeapMemorySize",usedNoHeapMemorySize);
-                log.info("Service 当前执行的线程为："+Thread.currentThread().getName());
-                return  memory;
-            }
-        });
+        logger.info("查询");
+        return memory;
+    }
 
-        return future.get();
+    private String dealWithMemorySize(long totalMemorySize) {
+        if (totalMemorySize < 2<<9l){
+            return totalMemorySize +"B";
+        }
+        if (totalMemorySize >=2<<9l &&totalMemorySize<2<<18l ){
+            return totalMemorySize/(2<<9l) +"kB";
+        }
+        if (totalMemorySize >=2<<18l &&totalMemorySize< 2<<27l ){
+            return totalMemorySize/(2<<18l) +"MB";
+        }
+        return "";
     }
 
     @Override

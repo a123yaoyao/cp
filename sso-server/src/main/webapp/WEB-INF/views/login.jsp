@@ -18,7 +18,9 @@
         <form method="post" onsubmit="return false;" class="form">
             <input type="text" value="itdragon" name="username" placeholder="Account"/>
             <input type="password" value="123456789" name="password" placeholder="Password"/>
-            <button type="button" id="login-button">Login</button>
+            <input type="text" name="checkCode" placeholder="验证码" />
+           <%-- <img id="checkCode_img" alt="点击刷新验证码" />
+            <button type="button" id="login-button">Login</button>--%>
         </form>
     </div>
     <ul class="bg-bubbles">
@@ -56,6 +58,9 @@
             doLogin();
         });
     });
+    var getCodeUrl="/getCode";//获取验证码的后端地址
+    $('#checkCode_img').attr('src',getCodeUrl+'?t='+ new Date().getTime()).show();
+    $('#checkCode_img').click(function(){this.src=getCodeUrl+'?t='+ new Date().getTime();});
 </script>
 </body>
 </html>
