@@ -58,9 +58,6 @@ public class MachineServiceImpl implements MachineService {
         long usedMemorySize = memoryUsage.getUsed(); //已使用的内存
         Map<String,String> memory=new HashMap<>();
         dealWithMemorySize(totalMemorySize);
-/*        memory.put("totalMemorySize",String.valueOf(totalMemorySize/1024/1024)+"MB");
-        memory.put("maxMemorySize",String.valueOf(maxMemorySize/1024/1024)+"MB");
-        memory.put("usedMemorySize",(String.valueOf(usedMemorySize/1024/1024)+"MB"));*/
         memory.put("totalMemorySize",dealWithMemorySize(totalMemorySize));
         memory.put("maxMemorySize",dealWithMemorySize(maxMemorySize));
         memory.put("usedMemorySize",dealWithMemorySize(usedMemorySize));
@@ -70,14 +67,18 @@ public class MachineServiceImpl implements MachineService {
     }
 
     private String dealWithMemorySize(long totalMemorySize) {
-        if (totalMemorySize < 2<<9l){
+
+        if (totalMemorySize < 1024L){
             return totalMemorySize +"B";
         }
-        if (totalMemorySize >=2<<9l &&totalMemorySize<2<<18l ){
-            return totalMemorySize/(2<<9l) +"kB";
+        if (totalMemorySize >=1024L &&totalMemorySize<1024*1024 ){
+            return totalMemorySize/(1024l) +"kB";
         }
-        if (totalMemorySize >=2<<18l &&totalMemorySize< 2<<27l ){
-            return totalMemorySize/(2<<18l) +"MB";
+        if (totalMemorySize >=1024*1024 &&totalMemorySize< 1024*1024*1024 ){
+            return totalMemorySize/(1024l*1024l) +"MB";
+        }
+        if (totalMemorySize >=1024l*1024l*1024l  ){
+            return totalMemorySize/(1024l*1024l*1024l) +"TB";
         }
         return "";
     }

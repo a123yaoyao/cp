@@ -23,4 +23,10 @@ public class CommonController {
     public String getParamList(){
         return new Gson().toJson(paramService.findAll()) ;
     }
+
+    @RequestMapping("param/ParamPage")
+    @ResponseBody
+    public String getParamPage(){
+        return new Gson().toJson(paramService.findPage()) ;
+    }
 }
