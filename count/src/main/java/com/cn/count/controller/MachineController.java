@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
+import java.util.concurrent.ExecutionException;
 
 @RestController("/")
 @Api("swaggerDemoController相关的api")
@@ -26,10 +27,15 @@ public class MachineController {
 
     @ApiOperation(value="获取机器详细信息", notes="")
     @RequestMapping("/machine")
-   public  String getMachineInfo(Model model){
+   public  String getMachineInfo(Model model) throws ExecutionException, InterruptedException {
         // 使用new方法
-        Gson gson = new Gson();
-      String machine=  gson.toJson(machineService.getHeapMemory())  ;
+      Gson gson = new Gson();
+      String machine =null;
+      try {
+           machine = gson.toJson(machineService.getHeapMemory());
+      }catch (Exception e){
+          return e.getLocalizedMessage();
+      }
       //logger.info(machine);
       return machine;
     }
