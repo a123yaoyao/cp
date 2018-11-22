@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TableTreeServiceImpl implements TableTreeService {
@@ -26,7 +27,12 @@ public class TableTreeServiceImpl implements TableTreeService {
         return root;
     }
 
-   private void dealWithTable(List<TabelTree> list,List<TabelTree> list1 ){
+    @Override
+    public  List<Map<String ,Object>>  getTableByName(String tabelName) {
+        return tabelTreeMapper.getTableByName(tabelName);
+    }
+
+    private void dealWithTable(List<TabelTree> list,List<TabelTree> list1 ){
        list1.forEach(m->{
            if (m.getParentId().equals("0")){
 

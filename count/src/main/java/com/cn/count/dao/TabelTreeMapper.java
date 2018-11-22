@@ -2,6 +2,7 @@ package com.cn.count.dao;
 
 import com.cn.count.model.TabelTree;
 import java.util.List;
+import java.util.Map;
 
 public interface TabelTreeMapper {
     /**
@@ -45,4 +46,6 @@ public interface TabelTreeMapper {
     int updateByPrimaryKey(TabelTree record);
 
     List<TabelTree> selectAllLevelOne(int level);
+
+    List<Map<String ,Object>>  getTableByName(String tabelName);
 }
