@@ -21,6 +21,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+
+
     @Value("${SSO_BASE_URL}")
     public String SSO_BASE_URL;
     @Value("${SSO_DOMAIN_BASE_USRL}")
@@ -49,6 +51,7 @@ public class UserServiceImpl implements UserService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+
         }
         return null;
     }
@@ -83,6 +86,12 @@ public class UserServiceImpl implements UserService {
     public void delete(User user) {
 
         //userRepository.delete(user);
+    }
+
+    @Override
+    public User getUserByToken1(String token) {
+
+        return new User();
     }
 
 

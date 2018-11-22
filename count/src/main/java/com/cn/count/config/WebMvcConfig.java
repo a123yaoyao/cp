@@ -34,7 +34,7 @@ public class WebMvcConfig  implements WebMvcConfigurer{
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-       // registry.addInterceptor(  loginHandlerInterceptor  ).addPathPatterns("/**").excludePathPatterns("/static/**");
+        //registry.addInterceptor(  loginHandlerInterceptor  ).addPathPatterns("/**").excludePathPatterns("/static/**");
                 //.excludePathPatterns("/api/getToken","/success")
                 //.excludePathPatterns("/static/**");
          ;

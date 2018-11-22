@@ -15,6 +15,14 @@ public class CountController {
     @RequestMapping("/")
     @ApiOperation(value="x", notes="")
     public  String count(){
-        return "admin-index";
+
+        return "index";
+    }
+
+    @RequestMapping("/admin-index")
+    @ApiOperation(value="x", notes="")
+    public  String admin(){
+         return "admin-index";
+
     }
 }

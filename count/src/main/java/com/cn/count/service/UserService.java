@@ -20,4 +20,6 @@ public interface UserService {
     void edit(User user);
 
     void delete(User user);
+
+    User getUserByToken1(String token);
 }
