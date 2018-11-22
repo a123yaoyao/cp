@@ -53,10 +53,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>    <!-- 因为SpringBoot内嵌的tomcat不支持jsp页面，同时SpringBoot也不推荐用jsp -->
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-            <scope>provided</scope>
+        <!-- 因为SpringBoot内嵌的tomcat不支持jsp页面，同时SpringBoot也不推荐用jsp  -->
+        <!-- 使用 idea 导入建议取消-->
+         <dependency>
+             <groupId>org.apache.tomcat.embed</groupId>
+             <artifactId>tomcat-embed-jasper</artifactId>
+            <!-- <scope>provided</scope>-->
         </dependency>
         <dependency>    <!-- jsp标签库 -->
             <groupId>javax.servlet</groupId>
