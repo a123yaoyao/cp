@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="Amaze UI" />
   <link rel="stylesheet" href="../css/amazeui.min.css"/>
   <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../tree-master/dist/amazeui.tree.css"/>
 </head>
 <body>
 <!--[if lte IE 9]>
@@ -39,30 +40,44 @@
 
       <div class="am-g">
         <div class="am-u-sm-12 am-u-sm-centered">
-          <h2></h2>
-          <p></p>
-          <p></p>
-          <p></p>
-          <hr/>
+
+          <ul class="am-tree" id="firstTree">
+            <li class="am-tree-branch am-hide" data-template="treebranch">
+              <div class="am-tree-branch-header">
+                <button class="am-tree-branch-name">
+                  <span class="am-tree-icon am-tree-icon-folder"></span>
+                  <span class="am-tree-label"></span>
+                </button>
+              </div>
+              <ul class="am-tree-branch-children"></ul>
+              <div class="am-tree-loader"><span class="am-icon-spin am-icon-spinner"></span></div>
+            </li>
+            <li class="am-tree-item am-hide" data-template="treeitem">
+              <button class="am-tree-item-name">
+                <span class="am-tree-icon am-tree-icon-item"></span>
+                <span class="am-tree-label"></span>
+              </button>
+            </li>
+          </ul>
+
+          <h2>表名： </h2>
+          <p onclick="addClomun()">添加</p>
+
+
         </div>
 
         <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
-          <h3></h3>
-          <p></p>
-          <ol>
-            <li></li>
-            <li></li>
+
+          <ol id="cloumn">
+
           </ol>
-          <p></p>
-          <p></p>
-          <p></p>
-          <ol>
-            <li> </li>
-            <li></li>
-            <li></li>
-          </ol>
+
         </div>
       </div>
+
+
+
+
     </div>
 
     <footer class="admin-content-footer">
@@ -92,5 +107,95 @@
 <!--<![endif]-->
 <script src="../js/amazeui.min.js"></script>
 <script src="../js/app.js"></script>
+<script src="../tree-master/dist/amazeui.tree.js"></script>
 </body>
 </html>
+<script>
+    $(document).ready(function(){
+        console.log(data);
+       loadTableTree();
+        $('#firstTree').tree({
+            dataSource: function(options, callback) {
+                // 模拟异步加载
+                setTimeout(function() {
+                    callback({data: options.products || data1});
+                }, 400);
+            },
+            multiSelect: false,
+            cacheItems: true,
+            folderSelect: false
+        });
+    });
+    
+    function loadTableTree() {
+        $.ajax({
+            url:'../getTableTree',
+            type: 'POST',
+            dataType:'json',
+            // async:false,
+            success:function(data){
+              data1=data;
+              console.log(data1);
+
+            }
+        });
+    }
+    var data1 =[];
+    function addClomun() {
+        var html='<label>名称</label><input/>';
+        $('#cloumn').append(html);
+    }
+
+    // demo 1
+    var data = [
+        {
+            title: '1级节点1',
+            "type": 'item',
+            id : '1',
+            /*id : '1',
+            name:  "1级节点1",*/
+            /*"parentId": "0",*/
+/*            id: "1",
+            "name": "1级节点1",
+            "parentId": "0",
+            "order": 1,
+            "title": "1级节点1",
+            type: "1",
+            "level": 1,*/
+            products: [
+                {
+                    title: 'iPhone',
+                    type: 'item'
+                },
+                {
+                    title: 'iMac',
+                    type: 'item'
+                },
+                {
+                    title: 'MacBook Pro',
+                    type: 'item'
+                }
+            ]
+        },
+        {
+            title: '微软公司',
+            type: 'item'
+        },
+        {
+            title: 'GitHub',
+            type: 'item',
+            attr: {
+                icon: 'am-icon-github'
+            }
+        }
+    ];
+
+    $('#firstTree').on('selected.tree.amui', function (event, data) {
+        // do something with data: { selected: [array], target: [object] }
+       // alert(1);
+        console.log(data.selected[0].type);
+    });
+
+
+
+</script>
