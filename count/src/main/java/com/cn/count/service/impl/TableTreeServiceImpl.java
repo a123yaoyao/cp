@@ -29,7 +29,19 @@ public class TableTreeServiceImpl implements TableTreeService {
 
     @Override
     public  List<Map<String ,Object>>  getTableByName(String tabelName) {
-        return tabelTreeMapper.getTableByName(tabelName);
+        List<Map<String ,Object>> list= tabelTreeMapper.getTableByName(tabelName);
+        list.forEach(m->{
+            if (!m.containsKey("CHARACTER_MAXIMUM_LENGTH")){
+                m.put("CHARACTER_MAXIMUM_LENGTH","");
+            }
+            if (!m.containsKey("NUMERIC_PRECISION")){
+                m.put("NUMERIC_PRECISION","");
+            }
+            if (!m.containsKey("COLUMN_DEFAULT")){
+                m.put("COLUMN_DEFAULT","");
+            }
+        });
+        return list;
     }
 
     private void dealWithTable(List<TabelTree> list,List<TabelTree> list1 ){

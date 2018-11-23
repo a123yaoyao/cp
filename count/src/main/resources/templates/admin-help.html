@@ -193,13 +193,13 @@
                 '</tr>';
         }
 
-
+        $('#cloumn').html('');
         $('#cloumn').append(html);
     }
 
     //通过表名查询表结构
     function getTableByName(name){
-        console.log(name);
+
         $.ajax({
             url:'../getTableByName',
             type: 'POST',
