@@ -1,9 +1,10 @@
 <!doctype html>
+<!--suppress ALL -->
 <html class="no-js">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Amaze UI Admin help Examples</title>
+  <title>Tools</title>
   <meta name="description" content="这是一个 help 页面">
   <meta name="keywords" content="help">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,13 +58,8 @@
 
       <div class="am-g">
         <div class="am-u-sm-12 am-u-sm-centered">
-
-
-
           <h2 id="table_name"></h2>
-          <p onclick="addClomun()">添加</p>
-
-
+          <a class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="addDefaultClomun()">添加</a>
         </div>
 
 
@@ -76,6 +72,7 @@
                 <tr>
                   <th class="table-check"></th><th class="table-title">属性名称 </th><th class="table-title">列名称</th><th class="table-title">数据类型 </th>
                   <th class="table-title">数据大小</th><th class="table-title">精度</th><th class="table-title">默认值</th><th class="table-title">排序</th>
+                  <th class="table-title">操作</th>
                 </tr>
                 </thead>
                 <tbody id="cloumn">
@@ -93,16 +90,11 @@
       </div>
 
 
-
-
-
-
-
     </div>
 
     <footer class="admin-content-footer">
       <hr>
-      <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+      <p class="am-padding-left"></p>
     </footer>
 
   </div>
@@ -113,7 +105,7 @@
 
 <footer>
   <hr>
-  <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+  <p class="am-padding-left"></p>
 </footer>
 
 <!--[if lt IE 9]>
@@ -135,7 +127,6 @@
     $(document).ready(function(){
        loadTableTree();
        loadTree();
-
     });
 
     function loadTree() {
@@ -158,7 +149,6 @@
             url:'../getTableTree',
             type: 'POST',
             dataType:'json',
-            // async:false,
             success:function(data){
               data1=data;
 
@@ -169,24 +159,23 @@
 
     //添加列
     function addClomun(data) {
-        $('#table_name').text('表名'+data[0].TABLE_NAME);
+        $('#table_name').text('表名:'+data[0].TABLE_NAME);
         var html='';
         for (var i = 0; i <data.length ; i++) {
-            html+='<tr>\n' +
-                '<td><input type="checkbox" /></td>\n' +
-                '<td>'+data[i].COLUMN_NAME+'</td>\n' +
-                '<td><a href="#">'+data[i].COLUMN_COMMENT+'</a></td>' +
-                '<td>'+data[i].DATA_TYPE+'</td>\n' +
-                '<td class="am-hide-sm-only">'+data[i].CHARACTER_MAXIMUM_LENGTH+'</td>\n' +
-                '<td class="am-hide-sm-only">'+data[i].NUMERIC_PRECISION+'</td>\n' +
-                '<td class="am-hide-sm-only">'+data[i].COLUMN_DEFAULT+'</td>\n' +
-                '<td class="am-hide-sm-only">'+data[i].ORDINAL_POSITION+'</td>\n' +
-                '<td>\n' +
-                '<div class="am-btn-toolbar">\n' +
+            html+='<tr id="" >\n' +
+                '<td><input type="checkbox" /></td> ' +
+                '<td>'+data[i].COLUMN_NAME+'</td> ' +
+                '<td>'+data[i].COLUMN_COMMENT+'</a></td>' +
+                '<td>'+data[i].DATA_TYPE+'</td> ' +
+                '<td '+data[i].CHARACTER_MAXIMUM_LENGTH+'</td> ' +
+                '<td >'+data[i].NUMERIC_PRECISION+'</td>\n' +
+                '<td >'+data[i].COLUMN_DEFAULT+'</td> ' +
+                '<td >'+data[i].ORDINAL_POSITION+'</td> ' +
+                '<td> ' +
+                '<div class="am-btn-toolbar">' +
                 '<div class="am-btn-group am-btn-group-xs">\n' +
-                '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="editTable()"><span class="am-icon-pencil-square-o" onclick="editTable()"></span> 编辑</button>\n' +
-                '<button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>\n' +
-                '<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>\n' +
+                '<a class="am-btn am-btn-default am-btn-xs am-text-secondary edit_table" onclick="editTable('+i+')"> 编辑</a>' +
+                '<a class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" onclick="deleteTable('+i+',this)"> 删除</a>' +
                 '</div>\n' +
                 '</div>\n' +
                 '</td>\n' +
@@ -208,8 +197,6 @@
             "tabelName":name,
             },
             success:function(data){
-               console.log(data);
-
                 addClomun(data)
             }
         });
@@ -224,8 +211,64 @@
         getTableByName(table_name)
     });
 
- function editTable() {
-     alert(1);
+
+    
+ function editTable(i) {
+     var tr= $('#cloumn').children().eq(i);
+     if (tr.find('.filed_pro').length==0){
+         var content ='';
+         tr.children().each(function (n,item) {
+             content =$(item).text();
+             $(item).html('<input type="text" class="filed_pro" style="width: 100px;"  value="'+content+'"/>');
+         });
+         tr.children().eq(0).html('<input type="checkbox" />');
+         tr.children().eq(8).html('<td> ' +
+             '<div class="am-btn-toolbar">' +
+             '<div class="am-btn-group am-btn-group-xs">' +
+             '<a class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="editTable('+i+')" > 编辑</a>' +
+             '<a class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" onclick="deleteTable('+i+',this)"> 删除</a>' +
+             '</div>' +
+             '</div>' +
+             '</td>' );
+
+     }
+
+ }
+
+ function addDefaultClomun() {
+     var len= $('#cloumn').children().length;
+     console.log(len);
+     len = len==0?len:len-1;
+
+
+    var  html ='<tr id="" >\n' +
+         '<td><input type="checkbox" /></td> ' +
+         '<td><input type="text" class="filed_pro " style="width: 100px;"  value="" minlength="2"/></td> ' +
+         '<td><input type="text" class="filed_pro" style="width: 100px;"  value=""/></a></td>' +
+         '<td><select data-am-selected><option value="VARCHAR2">字符串</option><option value="CHAR">字符</option>' +
+         '<option value="DATE">日期</option><option value="NUMBER">数值</option><option value="BOOLEAN">布尔</option></select></td> ' +
+         '<td> <input type="number" class="filed_pro" style="width: 100px;"  value="200"/></td> ' +
+         '<td ><input type="number" class="filed_pro" style="width: 100px;"  value=""/></td>' +
+         '<td ><input type="text" class="filed_pro" style="width: 100px;"  value=""/></td> ' +
+         '<td ><input type="number" class="filed_pro" style="width: 100px;"  value=""/></td> ' +
+         '<td> ' +
+         '<div class="am-btn-toolbar">' +
+         '<div class="am-btn-group am-btn-group-xs">\n' +
+         '<a class="am-btn am-btn-default am-btn-xs am-text-secondary edit_table" onclick="editTable('+len+')"> 编辑</a>' +
+         '<a class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" onclick="deleteTable('+len+',this)"> 删除</a>' +
+         '</div>\n' +
+         '</div>\n' +
+         '</td>\n' +
+         '</tr>';
+
+
+
+    $('#cloumn').append(html);
+ }
+
+ //删除某行
+ function deleteTable(i,obj) {
+    $(obj).parent().parent().parent().parent().remove();
  }
 
 </script>
