@@ -1,6 +1,7 @@
 package com.cn.count.service;
 
 import com.cn.count.model.SysParams;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ import java.util.List;
 public interface ParamService {
 
     List<SysParams> findAll();
+
+    PageInfo<SysParams> findPage();
 }

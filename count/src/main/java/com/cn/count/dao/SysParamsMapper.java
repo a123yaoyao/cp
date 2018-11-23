@@ -1,6 +1,7 @@
 package com.cn.count.dao;
 
 import com.cn.count.model.SysParams;
+import com.gitee.fastmybatis.core.mapper.CrudMapper;
 import org.mapstruct.Mapper;
 
 
