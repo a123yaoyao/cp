@@ -131,9 +131,14 @@
 </body>
 </html>
 <script>
+    var data1 =[];//
     $(document).ready(function(){
-
        loadTableTree();
+       loadTree();
+
+    });
+
+    function loadTree() {
         $('#firstTree').tree({
             dataSource: function(options, callback) {
                 // 模拟异步加载
@@ -145,8 +150,9 @@
             cacheItems: true,
             folderSelect: false
         });
-    });
-    
+    }
+
+    //查询表树形结构
     function loadTableTree() {
         $.ajax({
             url:'../getTableTree',
@@ -156,38 +162,42 @@
             success:function(data){
               data1=data;
 
-
             }
         });
     }
-    var data1 =[];
+
+
+    //添加列
     function addClomun(data) {
         $('#table_name').text('表名'+data[0].TABLE_NAME);
         var html='';
         for (var i = 0; i <data.length ; i++) {
             html+='<tr>\n' +
-                '                  <td><input type="checkbox" /></td>\n' +
-                '                  <td>'+data[i].COLUMN_NAME+'</td>\n' +
-                '                  <td><a href="#">'+data[i].COLUMN_COMMENT+'</a></td>' +
-                '                  <td>'+data[i].COLUMN_TYPE+'</td>\n' +
-                '                  <td class="am-hide-sm-only">'+data[i].COLUMN_COMMENT+'</td>\n' +
-                '                  <td class="am-hide-sm-only">2014年9月4日 7:28:47</td>\n' +
-                '                  <td>\n' +
-                '                    <div class="am-btn-toolbar">\n' +
-                '                      <div class="am-btn-group am-btn-group-xs">\n' +
-                '                        <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>\n' +
-                '                        <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>\n' +
-                '                        <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>\n' +
-                '                      </div>\n' +
-                '                    </div>\n' +
-                '                  </td>\n' +
-                '                </tr>';
+                '<td><input type="checkbox" /></td>\n' +
+                '<td>'+data[i].COLUMN_NAME+'</td>\n' +
+                '<td><a href="#">'+data[i].COLUMN_COMMENT+'</a></td>' +
+                '<td>'+data[i].DATA_TYPE+'</td>\n' +
+                '<td class="am-hide-sm-only">'+data[i].CHARACTER_MAXIMUM_LENGTH+'</td>\n' +
+                '<td class="am-hide-sm-only">'+data[i].NUMERIC_PRECISION+'</td>\n' +
+                '<td class="am-hide-sm-only">'+data[i].COLUMN_DEFAULT+'</td>\n' +
+                '<td class="am-hide-sm-only">'+data[i].ORDINAL_POSITION+'</td>\n' +
+                '<td>\n' +
+                '<div class="am-btn-toolbar">\n' +
+                '<div class="am-btn-group am-btn-group-xs">\n' +
+                '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="editTable()"><span class="am-icon-pencil-square-o" onclick="editTable()"></span> 编辑</button>\n' +
+                '<button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>\n' +
+                '<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>\n' +
+                '</div>\n' +
+                '</div>\n' +
+                '</td>\n' +
+                '</tr>';
         }
 
-        console.log(html);
+
         $('#cloumn').append(html);
     }
 
+    //通过表名查询表结构
     function getTableByName(name){
         console.log(name);
         $.ajax({
@@ -214,6 +224,8 @@
         getTableByName(table_name)
     });
 
-
+ function editTable() {
+     alert(1);
+ }
 
 </script>
