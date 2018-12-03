@@ -21,6 +21,7 @@ public class TableTreeServiceImpl implements TableTreeService {
         int level =1;
         List<TabelTree> list = tabelTreeMapper.selectAll();
         List<TabelTree> root = tabelTreeMapper.selectAllLevelOne(level);
+        //循环根节点 对每一个根节点进行递归设置子节点
         for (TabelTree m : root) {
             setChild(  m,m.getId(),list);
         }
@@ -44,33 +45,35 @@ public class TableTreeServiceImpl implements TableTreeService {
         return list;
     }
 
-    private void dealWithTable(List<TabelTree> list,List<TabelTree> list1 ){
-       list1.forEach(m->{
-           if (m.getParentId().equals("0")){
 
-           }else {
-               setChild(m,m.getId(),list);
-           }
-       });
-    }
-
+    /**
+     * 递归设置子节点
+     * @param tabelTree 树结构某个父节点
+     * @param id       当前节点的id
+     * @param list     树结构所有数据
+     */
     private void setChild(TabelTree tabelTree,String id, List<TabelTree> list) {
         List<TabelTree> children = new ArrayList<>();
+        //循环树结构 给当前id所属的节点设置子节点
         list.forEach(m->{
             if (id.equals(m.getParentId())){
                 children.add(m);
             }
         });
 
+        //循环当前节点的子节点 设置当前节点子节点的子孙节点
         children.forEach(m->{
             setChild(m,m.getId(),list);
         });
+
+        //若当前节点的子节点为空 则new 一个新的对象
         List<TabelTree> list2 =new ArrayList<TabelTree>();
         if (children.size() == 0) {
             list2.add(new TabelTree());
             tabelTree.setProducts(list2);
             return;
         }
+        //设置子节点
         tabelTree.setProducts(children);
     }
 
