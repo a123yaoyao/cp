@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -19,6 +21,8 @@ public class MongoTests {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    Logger log = LoggerFactory.getLogger(MongoTests.class);
 
 
     @Test

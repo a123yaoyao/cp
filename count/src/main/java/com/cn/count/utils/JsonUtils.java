@@ -8,6 +8,10 @@ import java.util.List;
 
 public class JsonUtils {
 
+   void  test(){
+       System.out.println(11879798);
+    }
+
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     /**
