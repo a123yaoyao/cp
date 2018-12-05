@@ -2,13 +2,10 @@ package com.cn.count.service.impl;
 
 import com.cn.count.model.ResponseResult;
 import com.cn.count.model.User;
-import com.cn.count.repository.UserRepository;
 import com.cn.count.service.UserService;
 import com.cn.count.utils.HttpClientUtil;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
