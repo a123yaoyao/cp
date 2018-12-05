@@ -8,6 +8,8 @@ import com.gitee.fastmybatis.core.util.MapperUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,8 @@ public class ParamServiceImpl implements ParamService {
     @Autowired
     SysParamsMapper paramsMapper;
 
+
+
     @Override
     public List<SysParams> findAll() {
         return paramsMapper.selectAll();
@@ -32,6 +36,7 @@ public class ParamServiceImpl implements ParamService {
 
     @Override
     public PageInfo<SysParams> findPage() {
+
         PageHelper.startPage(1,10);
         List<SysParams> list = findAll();
         PageInfo<SysParams> page = new PageInfo<>(list);
